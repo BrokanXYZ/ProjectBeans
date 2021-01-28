@@ -6,7 +6,7 @@ import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { SphereBuilder } from "@babylonjs/core/Meshes/Builders/sphereBuilder";
 import { GroundBuilder } from "@babylonjs/core/Meshes/Builders/groundBuilder";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
-import { CylinderBuilder } from  "@babylonjs/core/Meshes/Builders/CreateCylinder";
+import { CylinderBuilder } from "@babylonjs/core/Meshes/Builders/CylinderBuilder";
 import {CreateSceneClass} from "../createScene";
 
 // If you don't need the standard material you will still need to import it since the scene requires it.

@@ -12,7 +12,7 @@ import {CreateSceneClass} from "../createScene";
 // import "@babylonjs/core/Materials/standardMaterial";
 import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 
-import grassTextureUrl from "../../assets/grass.jpg";
+import grassTextureUrl from "../../assets/DIRT.jpg";
 
 export class DefaultSceneWithTexture implements CreateSceneClass {
 

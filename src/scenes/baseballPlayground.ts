@@ -33,8 +33,8 @@ class BaseballPlayground implements CreateSceneClass {
         camera.attachControl(canvas, true);
         camera.radius = 50;
         camera.beta = 1.25;
-        camera.upperBetaLimit = 1.4;
-        camera.lowerRadiusLimit = 10;
+        camera.upperBetaLimit = 1.55;
+        camera.lowerRadiusLimit = 22;
         camera.upperRadiusLimit = 500;
         camera.panningSensibility = 0; // panning disabled (ctrl+leftMouse)
     

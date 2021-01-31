@@ -13,7 +13,7 @@ import {CreateSceneClass} from "../createScene";
 // import "@babylonjs/core/Materials/standardMaterial";
 import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 
-import grassTextureUrl from "../../assets/DIRT.jpg";
+import grassTextureUrl from "../../assets/grass.jpg";
 
 export class DefaultSceneWithTexture implements CreateSceneClass {
 
@@ -60,9 +60,9 @@ export class DefaultSceneWithTexture implements CreateSceneClass {
         (
             "bat",
             {
-                diameterBottom: 0.5; 
-                diameterTop: 1;
-                height: 4;
+                diameterBottom: 0.5,
+                diameterTop: 1,
+                height: 4
             },
             scene
         )

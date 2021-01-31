@@ -3,9 +3,12 @@ import { getSceneModuleWithName } from "./createScene";
 
 const getModuleToLoad = (): string | undefined => location.search.split('scene=')[1];
 
+
+
 export const babylonInit = async (): Promise<void>  => {
     // get the module to load
     const moduleName = getModuleToLoad();
+    console.log(location.search)
     const createSceneModule = await getSceneModuleWithName(moduleName);
 
     // Execute the pretasks, if defined

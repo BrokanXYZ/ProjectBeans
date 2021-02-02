@@ -7,7 +7,9 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { SphereBuilder } from "@babylonjs/core/Meshes/Builders/sphereBuilder";
 import { GroundBuilder } from "@babylonjs/core/Meshes/Builders/groundBuilder";
+import { PlaneBuilder } from "@babylonjs/core/Meshes/Builders/planeBuilder";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
+import { PointerDragBehavior } from "@babylonjs/core/Behaviors/Meshes/pointerDragBehavior";
 import { CubeTexture } from "@babylonjs/core/Materials/Textures/cubeTexture";
 import { AmmoJSPlugin } from "@babylonjs/core/Physics/Plugins/ammoJSPlugin";
 import "@babylonjs/core/Physics/physicsEngineComponent";
@@ -29,13 +31,15 @@ class BaseballPlayground implements CreateSceneClass {
         scene.enablePhysics(null, new AmmoJSPlugin(true, ammoModule));
     
         const camera = new ArcRotateCamera("mainCamera", 0, Math.PI / 3, 10, new Vector3(0, 0, 0), scene);
-        camera.setTarget(Vector3.Zero());
+        camera.setTarget(new Vector3(0,5,0));
         camera.attachControl(canvas, true);
         camera.radius = 50;
         camera.beta = 1.25;
+        camera.lowerAlphaLimit = -0.25;
+        camera.upperAlphaLimit = 0.25;
         camera.upperBetaLimit = 1.55;
-        camera.lowerRadiusLimit = 22;
-        camera.upperRadiusLimit = 500;
+        camera.lowerRadiusLimit = 20;
+        camera.upperRadiusLimit = 100;
         camera.panningSensibility = 0; // panning disabled (ctrl+leftMouse)
     
         const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
@@ -50,13 +54,12 @@ class BaseballPlayground implements CreateSceneClass {
         skyboxMaterial.specularColor = new Color3(0, 0, 0);
         skybox.material = skyboxMaterial;	
 
-        const sphere = SphereBuilder.CreateSphere(
+        const baseball = SphereBuilder.CreateSphere(
             "sphere",
             { diameter: 2, segments: 32 },
             scene
         );
-        sphere.physicsImpostor = new PhysicsImpostor(sphere, PhysicsImpostor.SphereImpostor, { mass: 2, restitution: 0.8}, scene);
-        sphere.position.y = 5;
+        pitchBall();
     
         const ground = GroundBuilder.CreateGround(
             "ground",
@@ -72,6 +75,40 @@ class BaseballPlayground implements CreateSceneClass {
         groundMaterial.diffuseTexture = groundTexture;
 
         ground.material = groundMaterial;
+
+        const homePlate = PlaneBuilder.CreatePlane(
+            "homePlate",
+            { size: 7.5},
+            scene
+        );
+
+        homePlate.position.y = 0.1;
+        homePlate.rotation.x = Math.PI/2;
+
+        const bat = MeshBuilder.CreateCylinder("bat", { height: 8}, scene);
+        bat.physicsImpostor = new PhysicsImpostor(bat, PhysicsImpostor.CylinderImpostor, { mass: 0, restitution: 0.6});
+        bat.position.y = 12;
+
+
+        var pointerDragBehavior = new PointerDragBehavior({dragAxis: new Vector3(1,0,0)});
+        pointerDragBehavior.useObjectOrientationForDragging = false;
+        bat.addBehavior(pointerDragBehavior);
+
+        function pitchBall(){
+            if(baseball.physicsImpostor)
+            {
+                baseball.physicsImpostor.dispose();
+            }
+            baseball.physicsImpostor = new PhysicsImpostor(baseball, PhysicsImpostor.SphereImpostor, { mass: 2, restitution: 0.8}, scene);
+            baseball.physicsImpostor?.applyImpulse(new Vector3(75,25,0), baseball.getAbsolutePosition());
+            baseball.position.x = -75;
+            baseball.position.y = 10;
+            baseball.position.z = 0;
+        }
+
+        setInterval(()=>{
+            pitchBall();
+        }, 5000)
 
         engine.runRenderLoop(function () {
             // console.log("radius:",camera.radius);

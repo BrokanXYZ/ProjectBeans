@@ -15,7 +15,7 @@ export default class Ball {
         this.scene = scene;
         this.mesh = SphereBuilder.CreateSphere(
             name,
-            { diameter: 2, segments: 32 },
+            { diameter: 1, segments: 32 },
             scene
         );
 
@@ -36,11 +36,11 @@ export default class Ball {
         this.mesh.physicsImpostor = new PhysicsImpostor(
             this.mesh, 
             PhysicsImpostor.SphereImpostor, 
-            { mass: 2, restitution: 0.8}, 
+            { mass: 0.3, restitution: 0.6}, 
             this.scene
         );
 
-        this.mesh.physicsImpostor?.applyImpulse(new Vector3(75,25,0), this.mesh.getAbsolutePosition());
+        this.mesh.physicsImpostor?.applyImpulse(new Vector3(10,-10,0), this.mesh.getAbsolutePosition());
         this.mesh.position.x = -75;
         this.mesh.position.y = 10;
         this.mesh.position.z = 0;

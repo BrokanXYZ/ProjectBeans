@@ -25,6 +25,7 @@ import { CreateSceneClass } from "../createScene";
 import grassTextureUrl from "../../assets/grass.jpg";
 import Ball from "../components/ball";
 import Bat from "../components/bat";
+import * as Stumps from "../components/stumps";
 
 class Freeplay implements CreateSceneClass {
     preTasks = [ammoReadyPromise];
@@ -65,7 +66,13 @@ class Freeplay implements CreateSceneClass {
         groundMaterial.diffuseTexture = groundTexture;
         ground.material = groundMaterial;
 
-
+		const stump1 = new Stumps.Stump1("stump1",scene);
+		const stump2 = new Stumps.Stump2("stump2",scene);
+		const stump3 = new Stumps.Stump3("stump3",scene);		
+		
+		const bail1 = new Stumps.Bail1("bail1",scene);
+		const bail2 = new Stumps.Bail2("bail2",scene);				
+		
         const bat = new Bat("bat", scene);
 
         const ball = new Ball("ball", scene);

@@ -6,11 +6,7 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
 import { SphereBuilder } from "@babylonjs/core/Meshes/Builders/sphereBuilder";
 import { GroundBuilder } from "@babylonjs/core/Meshes/Builders/groundBuilder";
-import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
-import { SixDofDragBehavior } from "@babylonjs/core/Behaviors/Meshes/sixDofDragBehavior";
-import { UtilityLayerRenderer } from "@babylonjs/core/Rendering/utilityLayerRenderer";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
-import { BoundingBoxGizmo } from "@babylonjs/core/Gizmos/boundingBoxGizmo";
 import { ShadowGenerator } from "@babylonjs/core/Lights/Shadows/shadowGenerator";
 import { AmmoJSPlugin } from "@babylonjs/core/Physics/Plugins/ammoJSPlugin";
 import "@babylonjs/core/Physics/physicsEngineComponent";
@@ -37,9 +33,10 @@ class Freeplay implements CreateSceneClass {
     
         const camera = new ArcRotateCamera("mainCamera", 0, Math.PI / 3, 10, new Vector3(0, 0, 0), scene);
         camera.setTarget(new Vector3(0,5,0));
-        camera.attachControl(scene, false);
-        camera.radius = 50;
-        camera.beta = 1.25;
+        //camera.attachControl(scene, false);
+        camera.alpha = 0;
+        camera.beta = 1.23;
+        camera.radius = 20;
     
         const light = new DirectionalLight("dir01", new Vector3(-1, -5, -1), scene);
         light.position = new Vector3(20, 40, 20);
@@ -85,16 +82,21 @@ class Freeplay implements CreateSceneClass {
         // Shadows
         var shadowGenerator = new ShadowGenerator(1024, light);
         shadowGenerator.getShadowMap()?.renderList?.push(ball.mesh);
-        shadowGenerator.getShadowMap()?.renderList?.push(bat.mesh);
+        //shadowGenerator.getShadowMap()?.renderList?.push(bat.mesh);
         
 
         var shadowGenerator2 = new ShadowGenerator(1024, light);
         shadowGenerator2.addShadowCaster(ball.mesh);
-        shadowGenerator2.addShadowCaster(bat.mesh);
+        //shadowGenerator2.addShadowCaster(bat.mesh);
         shadowGenerator2.usePoissonSampling = true;
 
         ground.receiveShadows = true;
 
+        // engine.runRenderLoop(function () {
+        //     console.log("alpha",camera.alpha);
+        //     console.log("beta",camera.beta);
+        //     console.log("radius",camera.radius);
+        // });
 
         return scene;
     };

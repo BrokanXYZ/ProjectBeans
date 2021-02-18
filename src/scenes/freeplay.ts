@@ -54,7 +54,7 @@ class Freeplay implements CreateSceneClass {
             { width: 1000, height: 1000 },
             scene
         );
-        ground.physicsImpostor = new PhysicsImpostor(ground, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.6});
+        ground.physicsImpostor = new PhysicsImpostor(ground, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.6, friction: 100});
 
         const groundMaterial = new StandardMaterial("ground material", scene);
         let groundTexture: Texture = new Texture(grassTextureUrl, scene);

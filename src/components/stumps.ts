@@ -23,14 +23,14 @@ export class Stump1{
 		 stumpReal.position.y=1.5;
 		stumpWeight.position.y=0.8;
 		
-		stumpWeight.physicsImpostor = new PhysicsImpostor(stumpWeight, PhysicsImpostor.CylinderImpostor, { mass:20 , restitution: 0.1 }, scene);
+		stumpWeight.physicsImpostor = new PhysicsImpostor(stumpWeight, PhysicsImpostor.CylinderImpostor, { mass:20 , restitution: 0.0 }, scene);
 
-		stumpReal.physicsImpostor = new PhysicsImpostor(stumpReal, PhysicsImpostor.CylinderImpostor, { mass: 3, restitution: 0.1 }, scene);
+		stumpReal.physicsImpostor = new PhysicsImpostor(stumpReal, PhysicsImpostor.CylinderImpostor, { mass: 3, restitution: 0.0 }, scene);
 		
 		
 		//this.mesh = Mesh.MergeMeshes([stumpReal,stumpWeight])!;
 
-		this.mesh.physicsImpostor = new PhysicsImpostor(this.mesh, PhysicsImpostor.CylinderImpostor, { mass: 3, restitution: 0.1 }, scene);
+		this.mesh.physicsImpostor = new PhysicsImpostor(this.mesh, PhysicsImpostor.CylinderImpostor, { mass: 3, restitution: 0.0 }, scene);
 		
 		this.mesh.position.x = 9;
 		this.mesh.position.y = 1.5;
@@ -52,7 +52,7 @@ export class Stump2{
 	   this.mesh.position.y = 1.5;
 	   this.mesh.position.z = 0;
 
-	   this.mesh.physicsImpostor = new PhysicsImpostor(this.mesh, PhysicsImpostor.CylinderImpostor, { mass: 3, restitution: 0.1 }, scene);
+	   this.mesh.physicsImpostor = new PhysicsImpostor(this.mesh, PhysicsImpostor.CylinderImpostor, { mass: 10, restitution: 0.1 }, scene);
 }
 }
 
@@ -68,7 +68,7 @@ export class Stump3{
 		this.mesh.position.y = 1.5;
 		this.mesh.position.z =  0.6;
 		
-		this.mesh.physicsImpostor = new PhysicsImpostor(this.mesh, PhysicsImpostor.CylinderImpostor, { mass: 3, restitution: 0.1 }, scene);
+		this.mesh.physicsImpostor = new PhysicsImpostor(this.mesh, PhysicsImpostor.CylinderImpostor, { mass: 10, restitution: 0.1 }, scene);
 }
 }
 

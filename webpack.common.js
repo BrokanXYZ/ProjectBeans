@@ -36,6 +36,10 @@ module.exports = {
                 test: /\.tsx?$/,
                 loader: "ts-loader",
             },
+			{
+                test: /\.(ogg|mp3|wav|mpe?g)$/i,
+                loader: 'file-loader',
+			},
             {
                 test: /\.(png|jpg|gif|env|glb|stl)$/i,
                 use: [

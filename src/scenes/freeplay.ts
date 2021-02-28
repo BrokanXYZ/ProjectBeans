@@ -15,9 +15,11 @@ import "@babylonjs/core/Lights/Shadows/shadowGeneratorSceneComponent";
 import "@babylonjs/core/Materials/standardMaterial";
 import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { PhysicsImpostor } from "@babylonjs/core/Physics/physicsImpostor";
-
+import { Sound } from  "@babylonjs/core/Audio/sound";
 import { ammoModule, ammoReadyPromise } from "../externals/ammo";
 import { CreateSceneClass } from "../createScene";
+import { DynamicTexture} from "@babylonjs/core/Materials/Textures/dynamicTexture";
+import { PlaneBuilder } from "@babylonjs/core/Meshes/Builders/planeBuilder";
 import grassTextureUrl from "../../assets/grass.jpg";
 import Ball from "../components/ball";
 import Bat from "../components/bat";
@@ -30,14 +32,15 @@ class Freeplay implements CreateSceneClass {
 
         const scene = new Scene(engine);
         scene.enablePhysics(null, new AmmoJSPlugin(true, ammoModule));
-    
+		scene.gravity = new Vector3(0, -0.98, 0);
+		scene.collisionsEnabled = true;
+
         const camera = new ArcRotateCamera("mainCamera", 0, Math.PI / 3, 10, new Vector3(0, 0, 0), scene);
-        camera.setTarget(new Vector3(0,5,0));
-        //camera.attachControl(scene, false);
+        camera.setTarget(new Vector3(10,10,0));
+        camera.attachControl(scene, false);
         camera.alpha = 0;
         camera.beta = 1.23;
         camera.radius = 20;
-    
         const light = new DirectionalLight("dir01", new Vector3(-1, -5, -1), scene);
         light.position = new Vector3(20, 40, 20);
         light.intensity = 0.9;
@@ -91,7 +94,40 @@ class Freeplay implements CreateSceneClass {
         shadowGenerator2.usePoissonSampling = true;
 
         ground.receiveShadows = true;
+		
+		var scoreTexture = new DynamicTexture("scoreTexture", 50, scene, true);
+		var scoreboard =PlaneBuilder.CreatePlane("scoreboard", { height:10, width: 20}, scene);
+		// Position the scoreboard after the lane.
+		scoreboard.position.y = 15;
+		scoreboard.position.x = -30;
+		scoreboard.position.z = 0;
+		scoreboard.rotation.y= Math.PI / 2;
+		scoreboard.rotation.x= Math.PI / 1;
+		scoreboard.rotation.z = Math.PI/1;
+		// Create a material for the scoreboard.
+		var  scoreMat =  new StandardMaterial("scoradboardMat", scene);
+		scoreboard.material = scoreMat;
+		// Set the diffuse texture to be the dynamic texture.
+		scoreMat.diffuseTexture = scoreTexture;
 
+		var score = 0;
+		scoreTexture.drawText(score + " Runs", 10, 30,
+		"10px Arial", "white", "black");
+		//scene.registerBeforeRender(function() {
+		//var newScore = 10;
+		//if (newScore != score) {
+			//score = newScore;
+			// Clear the canvas. 
+			//scoreTexture.clear();
+			// Draw the text using a white font on black background.
+			//scoreTexture.drawText(score + " Runs", 40, 100,
+			//"bold 72px Arial", "white", "black");
+		//});
+			
+		//var swing = new Sound("swing", ".bat_swoosh_cut.mp3", scene, null, {
+        //loop: true,
+        //autoplay: false
+		//});
         // engine.runRenderLoop(function () {
         //     console.log("alpha",camera.alpha);
         //     console.log("beta",camera.beta);

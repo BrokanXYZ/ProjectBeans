@@ -95,7 +95,7 @@ class Freeplay implements CreateSceneClass {
 
         ground.receiveShadows = true;
 		
-		var scoreTexture = new DynamicTexture("scoreTexture", 50, scene, true);
+		var scoreTexture = new DynamicTexture("scoreTexture", {height:100, width:200}, scene, true);
 		var scoreboard =PlaneBuilder.CreatePlane("scoreboard", { height:10, width: 20}, scene);
 		// Position the scoreboard after the lane.
 		scoreboard.position.y = 15;
@@ -105,14 +105,17 @@ class Freeplay implements CreateSceneClass {
 		scoreboard.rotation.x= Math.PI / 1;
 		scoreboard.rotation.z = Math.PI/1;
 		// Create a material for the scoreboard.
+		var score = 0;
+		scoreTexture.drawText(score + " Runs", 100, 50,
+		"10px Arial", "white", "black");
 		var  scoreMat =  new StandardMaterial("scoradboardMat", scene);
-		scoreboard.material = scoreMat;
+		scoreMat.alpha = 0.999;
+		scoreMat.alphaMode = 1;
 		// Set the diffuse texture to be the dynamic texture.
 		scoreMat.diffuseTexture = scoreTexture;
+		scoreboard.material = scoreMat;
 
-		var score = 0;
-		scoreTexture.drawText(score + " Runs", 10, 30,
-		"10px Arial", "white", "black");
+
 		//scene.registerBeforeRender(function() {
 		//var newScore = 10;
 		//if (newScore != score) {
